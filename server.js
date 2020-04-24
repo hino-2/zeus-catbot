@@ -139,12 +139,20 @@ bot.onText(/(.+)/, (msg, match) => {
 
   if(reply)
     bot.sendMessage(chatId, reply)
+       .catch((error) => {
+         console.log(error.response.body)
+    });
   if(doc)
     bot.sendDocument(chatId, fs.readFileSync(doc), {}, {
       filename: doc
-    })
+    }).catch((error) => {
+      console.log(error.response.body)
+    });
   if(photo) 
     bot.sendPhoto(chatId, ( /^http/.test(photo) ? photo : fs.readFileSync(photo)))
+       .catch((error) => {
+         console.log(error.response.body)
+    })
 })
 
 bot.on('polling_error', (error) => {
